@@ -10,6 +10,7 @@ import 'normalize.css';
 import './style/styles.css';
 
 // прелоадер
+// eslint-disable-next-line func-names
 window.onload = function () {
   document.body.classList.add('loaded_hiding');
   window.setTimeout(() => {
@@ -20,7 +21,7 @@ window.onload = function () {
 
 // на русском локально из json файла получаю факты
 async function getData(n) {
-  const quotes = '/assets/facts.json';
+  const quotes = 'assets/facts.json';
   const res = await fetch(quotes);
   const data = await res.json();
   return data.value[n];
@@ -54,7 +55,7 @@ for (let i = 1; i <= num; i += 1) {
 arr.sort(() => Math.random() - 0.5);
 
 // вывод шапки игры
-document.querySelector('.game-header').innerHTML += '<div class=\'game-header\'><div style="flex-direction: row; display:flex"><button  id="settings" style="width:90px"><svg><use xlink:href="/assets/sprite.svg#settings"></use></svg></button> <button style="width:160px" id="restart">restart</button></div> <div><span>score:</span><span class=\'cur-score\'>0</span></div></div>';
+document.querySelector('.game-header').innerHTML += '<div class=\'game-header\'><div style="flex-direction: row; display:flex"><button  id="settings" style="width:90px"><svg><use xlink:href="assets/sprite.svg#settings"></use></svg></button> <button style="width:160px" id="restart">restart</button></div> <div><span>score:</span><span class=\'cur-score\'>0</span></div></div>';
 
 // выводим на поле
 const gameSection = document.querySelector('.game-field');
@@ -111,7 +112,7 @@ function flipCard() {
                 <p class="artist">${result.artist}</p>
                 <p class="year">${result.year}</p>
                 <div class="art-fact">${result.fact}</div>
-                <p class="place"><svg><use xlink:href="/assets/sprite.svg#location"></use></svg>${result.place}</p>`;
+                <p class="place"><svg><use xlink:href="assets/sprite.svg#location"></use></svg>${result.place}</p>`;
     });
 
     const selectedCards = document.querySelectorAll(`._${parseInt(this.classList.value.match(/\d+/), 10)} .back`);
@@ -321,3 +322,9 @@ function convertGifToPng(e) {
   const number = splitStr[splitStr.length - 1].split('.')[0];
   e.src = `assets/png/${number}.png`;
 }
+
+document.querySelectorAll('.name').forEach((name) => {
+  name.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter')saveName(name.value);
+  });
+});

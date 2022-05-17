@@ -84,7 +84,7 @@ dist
 
 # generate output
 .nuxt
-virtual-keyboard
+memory-game
 
 # Gatsby files
 .cache/

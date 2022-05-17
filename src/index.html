@@ -35,7 +35,7 @@
             <p>Привет! Представьтесь, пожалуйста:</p>
             <div>
                 <input type="text" autocomplete="off" required name='name' class='name'
-                    onkeydown="event.key==='Enter'?saveName(value):0">
+                    >
                 <button class="save-name" style="margin: 2vmax auto 0;">OK</button>
 
             </div>
@@ -47,9 +47,9 @@
                 <h2>Настройки</h2>
                 <ul>
                     <li>Имя игрока <input type="text" autocomplete="off" required name='name' class='name'
-                            onkeydown="event.key==='Enter'?saveName(value):0">
+                            >
                     </li>
-                    <li id="rating" onclick="ratingClick()">Рейтинг</li>
+                    <li id="rating">Рейтинг</li>
                     <li id="rules" onclick="document.querySelector('.rules').classList.toggle('show');
                 document.querySelector('.menu').classList.toggle('show')">Правила игры</li>
                 </ul>
