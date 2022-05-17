@@ -1,0 +1,753 @@
+@font-face {
+    font-family: 'memory';
+    src: url('assets/fonts/d9464-arkhip_font.ttf');
+}
+
+@font-face {
+    font-family: 'art';
+    src: url('assets/fonts/caviar-dreams.ttf');
+}
+
+:root {
+    --preloader-size: 100px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, LightSeaGreen, DarkOrchid, LightSeaGreen);
+    font-family: 'memory';
+    font-size: 1.5vmax;
+    color: white;
+}
+
+main {
+    display: flex;
+    position: relative;
+    height: 90vh;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+ul {
+    padding: 30px;
+    font-size: 1.5vmax;
+}
+
+li {
+    list-style: none;
+    line-height: 30px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+li:hover {
+    outline: 3px dashed Fuchsia;
+}
+
+li:active {
+    color: Fuchsia;
+}
+
+li:first-child {
+    cursor: default;
+    outline: none;
+    color: #fff;
+}
+
+li:first-child:hover {
+    font-weight: 100;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    outline: 3px dashed Fuchsia;
+}
+
+a:active {
+    color: Fuchsia;
+}
+
+p {
+    cursor: default;
+}
+
+button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    height: 50px;
+    overflow: hidden;
+    border: 3px dashed Fuchsia;
+    color: white;
+    background-color: transparent;
+    font-size: 20pt;
+    transition: all 100ms;
+    font-family: 'memory';
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    border: 10px dotted Fuchsia;
+    font-size: 14pt;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+button:hover svg {
+    transition: transform 0.5s ease-in-out;
+    transform: rotate(135deg) scale(0.7);
+    transform-origin: center;
+}
+
+button:active,
+button:active svg use {
+    color: fuchsia;
+    fill: fuchsia;
+}
+
+.glass {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1;
+}
+
+.glass.hide {
+    z-index: -5;
+    opacity: 0;
+}
+
+.lock-click {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
+
+.lock-click.hide {
+    z-index: -5;
+    opacity: 0;
+}
+
+.winner-text,
+.ask-name {
+    height: 35vmin;
+    width: 50vmin;
+    display: flex !important;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 3px dashed Fuchsia;
+    transform: scaleX(0) rotate(355deg);
+    transition: transform 1s;
+    padding: 0 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.winner-text.show,
+.ask-name.show {
+    transform: scaleX(1) rotate(-355deg);
+    transition: transform 1s;
+    z-index: 1;
+}
+
+.ask-name div {
+    padding: 20px;
+}
+
+.settings-window {
+    height: min(80vmax, 80vh);
+    width: min(50vmax, 80vw);
+    position: relative;
+    display: flex;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: transparent;
+    border: 3px dashed Fuchsia;
+    transform: scaleX(0) rotate(355deg);
+    flex-direction: column;
+    transition: transform 0.5s;
+}
+
+.settings-window.show {
+    transform: scaleX(1) rotate(-358deg);
+    transition: transform 1s;
+    z-index: 1;
+}
+
+.menu,
+.rules,
+.rating {
+    display: none;
+}
+
+.show {
+    display: block;
+    animation: show 0.5s ease;
+}
+
+.menu {
+    margin: 0 auto;
+}
+
+.menu div {
+    position: absolute;
+    bottom: 5%;
+    text-align: center;
+    padding: 0;
+    font-size: 1.1vmax;
+    margin: min(3vmax, 3vh);
+}
+
+.menu div p {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.rules div {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.rules p {
+    padding-top: 1vmax;
+}
+
+.art {
+    position: fixed;
+    top: -300%;
+    height: 100vh;
+    max-height: 100%;
+    z-index: 2;
+    transition: top 2s ease-in-out;
+    overflow-x: hidden;
+    perspective: 1px;
+    scroll-behavior: smooth;
+}
+
+.art.show {
+    top: 0;
+    transition: top 2s ease-in-out;
+}
+
+.art .paint {
+    height: 90vh;
+    transform: translateZ(-1px) scale(2.03);
+    padding: 1px 0;
+    margin: 2.5vmax auto;
+    background-image: url('assets/arts/1.jpg');
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+}
+
+#arrow {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    left: 50%;
+    bottom: 15px;
+    border-bottom: 3px solid white;
+    border-right: 3px solid white;
+    opacity: 0.1;
+    background: transparent;
+    animation: arrow 1s linear infinite forwards;
+}
+
+@keyframes arrow {
+    0% {
+        transform: translateY(0) rotate(55deg) skew(20deg);
+    }
+
+    100% {
+        transform: translateY(50%) rotate(55deg) skew(20deg);
+    }
+}
+
+.art .description {
+    height: auto;
+    padding: 20px;
+    align-content: center;
+    transform: translateZ(0);
+    backdrop-filter: blur(50px);
+    color: aliceblue;
+    margin-top: 40px;
+    font-family: 'art';
+}
+
+
+.description div p {
+    padding: 10px;
+}
+
+.description p {
+    padding-left: 10px;
+}
+
+.title {
+    font-size: 2vmax;
+    text-align: center;
+}
+
+.artist,
+.year {
+    font-size: 1.2vmax;
+    text-align: center;
+
+}
+
+
+.rotate-layer.show {
+    transform: rotate(717deg);
+    transition: transform 1s;
+    z-index: 2;
+}
+
+.rotate-layer {
+    position: fixed;
+    display: flex;
+    overflow: auto;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -5;
+    transform: rotate(-717deg);
+    transition: transform 1s;
+}
+
+.game-field,
+.memory-game {
+    height: fit-content;
+    width: clamp(200px, 43vmax, 100vw);
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    perspective: 1000;
+}
+
+.addition {
+    padding-top: 10px;
+    font-size: 0.7vmax;
+    font-weight: 100;
+}
+
+/*.front,
+.back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    transition: transform 0.5s ease;
+}
+
+.front {
+    transform-origin: top left;
+}
+
+.back {
+    transform: scale(0);
+}
+
+.flip .back {
+    transform: scale(1);
+}
+
+.flip .front {
+    transform: rotate3D(1, 1, 1, -120deg);
+    transform-origin: bottom right;
+    transition: transform 0.5s ease;
+}*/
+
+/*вместо закомментированного куска сверху. Потому что по ТЗ вроде как обязательно переворачивать, а не плавно открывать*/
+.memory-card {
+    height: 8vmax;
+    width: 8vmax;
+    position: relative;
+    margin: 0.3vmax;
+    transform: scale(1);
+    transform-style: preserve-3d;
+    transition: transform .5s;
+}
+
+.front,
+.back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 5px;
+    backface-visibility: hidden;
+}
+
+.back {
+    transform: rotateX(180deg);
+}
+
+.memory-card:hover {
+    transform: scale(0.96);
+}
+.memory-card.flip:hover {
+    transform: rotateX(180deg) scale(0.96);
+}
+
+.memory-card.flip {
+    transform: rotateX(180deg);
+}
+/*stop*/
+
+.game-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+}
+
+input {
+    width: 40%;
+    font-family: 'memory';
+    margin-left: 10px;
+    background-color: rgba(0, 79, 143, 0.3);
+    color: white;
+    padding: 0 5px;
+    font-size: 1.5vmax;
+    outline: 3px dashed Fuchsia;
+    border: none;
+    transition: outline-color 0.5s ease-in-out;
+}
+
+input:focus {
+    outline: 10px dotted Fuchsia;
+}
+
+#settings svg {
+    fill: white;
+    height: 30px;
+    width: 30px;
+}
+
+#settings,
+#settings:focus {
+    cursor: pointer;
+}
+
+.cur-score {
+    padding-left: 5px;
+}
+
+.place{
+    display: flex;
+    align-items: center;
+}
+.place svg{
+    fill: #fff;
+    height: 1.5vmax;
+    width: 1.5vmax;
+    padding: 0 0.2vmax 0 0;
+}
+
+table {
+    width: 50%;
+    margin: 30px auto;
+}
+
+.return {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    height: 32px;
+    opacity: 0.3;
+    /*display: none;*/
+    cursor: pointer;
+    font-size: 32px;
+    color: Fuchsia;
+}
+
+.return:hover {
+    opacity: 1;
+}
+
+.close {
+    position: fixed;
+    right: 20px;
+    top: 15px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+    /*display: none;*/
+    cursor: pointer;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+.close:before,
+.close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: Fuchsia;
+}
+
+.close:before {
+    transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
+}
+
+.close.active,
+.close.active:focus {
+    display: block;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.footer {
+    display: flex;
+    font-size: 20px;
+    max-width: 80%;
+    margin: 0 auto;
+    padding-top: 50px;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    padding-bottom: 0;
+    margin-bottom: 1vh;
+    color: #fff;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.footer-data {
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-item {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+
+.footer img {
+    height: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.preload {
+    position: absolute;
+    top: -9999px;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+.preloader {
+    /*фиксированное позиционирование*/
+    position: fixed;
+    /* координаты положения */
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /* фоновый цвет элемента */
+    background: linear-gradient(135deg, LightSeaGreen, DarkOrchid, LightSeaGreen);
+    /* размещаем блок над всеми элементами на странице (это значение должно быть больше, чем у любого другого позиционированного элемента на странице) */
+    z-index: 1001;
+}
+
+.preload-box {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: var(--preloader-size);
+    height: var(--preloader-size);
+    margin-top: calc(var(--preloader-size)/-2);
+    margin-left: calc(var(--preloader-size)/-2);
+    text-align: center;
+    overflow: hidden;
+    outline-offset: -7px;
+    background-image: url('assets/vermer.png');
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.preload-box span:nth-child(1) {
+    position: absolute;
+    height: 7px;
+    width: var(--preloader-size);
+    border-top: 7px dashed fuchsia;
+    top: 0;
+    left: 0;
+    animation: line1 2s linear infinite backwards;
+
+}
+
+@keyframes line1 {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    25%,
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.preload-box span:nth-child(2) {
+    position: absolute;
+    height: var(--preloader-size);
+    width: 7px;
+    border-right: 7px dashed fuchsia;
+    top: 0;
+    right: 0;
+    animation: line2 2s linear infinite backwards;
+}
+
+@keyframes line2 {
+
+    0%,
+    13% {
+        transform: translateY(-100%);
+    }
+
+    50%,
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.preload-box span:nth-child(3) {
+    position: absolute;
+    height: 7px;
+    width: var(--preloader-size);
+    border-bottom: 7px dashed fuchsia;
+    bottom: 0;
+    left: 0;
+    animation: line3 2s linear infinite backwards;
+}
+
+@keyframes line3 {
+
+    0%,
+    36% {
+        transform: translateX(100%);
+    }
+
+    75%,
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.preload-box span:nth-child(4) {
+    position: absolute;
+    height: var(--preloader-size);
+    width: 7px;
+    border-left: 7px dashed fuchsia;
+    top: 0;
+    left: 0;
+    animation: line4 2s linear infinite backwards;
+}
+
+@keyframes line4 {
+
+    0%,
+    61% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.loaded_hiding .preloader {
+    transition: 0.3s opacity;
+    opacity: 0;
+}
+
+.loaded .preloader {
+    display: none;
+}
