@@ -1,4 +1,4 @@
-## [Arts memory game](https://polivodichka.github.io/cssMemSlider/cssMemSlider/#mem1)
+## [Arts memory game](https://polivodichka.github.io/memory-game/)
 
 Сommon game played with a set of cards. The cards have a pictures on one side and each picture appears on two cards. The game starts with all the cards face down and ends after all pairs are found.
 
